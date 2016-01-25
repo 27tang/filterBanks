@@ -30,16 +30,22 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionGaussian_Blur;
+    QAction *actionMedian_Filter;
+    QAction *actionBox_Filter;
+    QAction *actionBilateral_Filter;
+    QAction *actionCanny_Edge;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QPushButton *gaussBlurButton;
+    QLabel *sliderValueLabel;
     QLabel *sourceLabel;
+    QPushButton *commitChangesButton;
+    QSlider *levelSlider;
     QLabel *destLabel;
     QPushButton *openButton;
-    QSlider *levelSlider;
-    QLabel *sliderValueLabel;
     QMenuBar *menuBar;
     QMenu *menuButtons;
+    QMenu *menuFilters;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -48,16 +54,37 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(794, 455);
+        actionGaussian_Blur = new QAction(MainWindow);
+        actionGaussian_Blur->setObjectName(QStringLiteral("actionGaussian_Blur"));
+        actionGaussian_Blur->setCheckable(true);
+        actionMedian_Filter = new QAction(MainWindow);
+        actionMedian_Filter->setObjectName(QStringLiteral("actionMedian_Filter"));
+        actionMedian_Filter->setCheckable(true);
+        actionBox_Filter = new QAction(MainWindow);
+        actionBox_Filter->setObjectName(QStringLiteral("actionBox_Filter"));
+        actionBox_Filter->setCheckable(true);
+        actionBilateral_Filter = new QAction(MainWindow);
+        actionBilateral_Filter->setObjectName(QStringLiteral("actionBilateral_Filter"));
+        actionBilateral_Filter->setCheckable(true);
+        actionCanny_Edge = new QAction(MainWindow);
+        actionCanny_Edge->setObjectName(QStringLiteral("actionCanny_Edge"));
+        actionCanny_Edge->setCheckable(true);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gaussBlurButton = new QPushButton(centralWidget);
-        gaussBlurButton->setObjectName(QStringLiteral("gaussBlurButton"));
+        sliderValueLabel = new QLabel(centralWidget);
+        sliderValueLabel->setObjectName(QStringLiteral("sliderValueLabel"));
+        QFont font;
+        font.setPointSize(14);
+        font.setBold(true);
+        font.setWeight(75);
+        sliderValueLabel->setFont(font);
+        sliderValueLabel->setAutoFillBackground(true);
 
-        gridLayout->addWidget(gaussBlurButton, 1, 0, 1, 1);
+        gridLayout->addWidget(sliderValueLabel, 0, 1, 1, 1);
 
         sourceLabel = new QLabel(centralWidget);
         sourceLabel->setObjectName(QStringLiteral("sourceLabel"));
@@ -65,27 +92,30 @@ public:
 
         gridLayout->addWidget(sourceLabel, 2, 0, 1, 1);
 
+        commitChangesButton = new QPushButton(centralWidget);
+        commitChangesButton->setObjectName(QStringLiteral("commitChangesButton"));
+        commitChangesButton->setEnabled(false);
+        commitChangesButton->setFlat(false);
+
+        gridLayout->addWidget(commitChangesButton, 0, 3, 1, 1);
+
+        levelSlider = new QSlider(centralWidget);
+        levelSlider->setObjectName(QStringLiteral("levelSlider"));
+        levelSlider->setEnabled(false);
+        levelSlider->setOrientation(Qt::Vertical);
+
+        gridLayout->addWidget(levelSlider, 2, 1, 1, 1);
+
         destLabel = new QLabel(centralWidget);
         destLabel->setObjectName(QStringLiteral("destLabel"));
         destLabel->setAutoFillBackground(true);
 
-        gridLayout->addWidget(destLabel, 2, 2, 1, 1);
+        gridLayout->addWidget(destLabel, 2, 3, 1, 1);
 
         openButton = new QPushButton(centralWidget);
         openButton->setObjectName(QStringLiteral("openButton"));
 
         gridLayout->addWidget(openButton, 0, 0, 1, 1);
-
-        levelSlider = new QSlider(centralWidget);
-        levelSlider->setObjectName(QStringLiteral("levelSlider"));
-        levelSlider->setOrientation(Qt::Vertical);
-
-        gridLayout->addWidget(levelSlider, 2, 1, 1, 1);
-
-        sliderValueLabel = new QLabel(centralWidget);
-        sliderValueLabel->setObjectName(QStringLiteral("sliderValueLabel"));
-
-        gridLayout->addWidget(sliderValueLabel, 0, 2, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -93,6 +123,8 @@ public:
         menuBar->setGeometry(QRect(0, 0, 794, 21));
         menuButtons = new QMenu(menuBar);
         menuButtons->setObjectName(QStringLiteral("menuButtons"));
+        menuFilters = new QMenu(menuBar);
+        menuFilters->setObjectName(QStringLiteral("menuFilters"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -102,6 +134,12 @@ public:
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuButtons->menuAction());
+        menuBar->addAction(menuFilters->menuAction());
+        menuFilters->addAction(actionGaussian_Blur);
+        menuFilters->addAction(actionMedian_Filter);
+        menuFilters->addAction(actionBox_Filter);
+        menuFilters->addAction(actionBilateral_Filter);
+        menuFilters->addAction(actionCanny_Edge);
 
         retranslateUi(MainWindow);
 
@@ -111,12 +149,18 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        gaussBlurButton->setText(QApplication::translate("MainWindow", "Gaussian Blur", 0));
+        actionGaussian_Blur->setText(QApplication::translate("MainWindow", "Gaussian Blur", 0));
+        actionMedian_Filter->setText(QApplication::translate("MainWindow", "Median Filter", 0));
+        actionBox_Filter->setText(QApplication::translate("MainWindow", "Box Filter", 0));
+        actionBilateral_Filter->setText(QApplication::translate("MainWindow", "Bilateral Filter", 0));
+        actionCanny_Edge->setText(QApplication::translate("MainWindow", "Canny Edge", 0));
+        sliderValueLabel->setText(QApplication::translate("MainWindow", "0", 0));
         sourceLabel->setText(QString());
+        commitChangesButton->setText(QApplication::translate("MainWindow", "Commit Changes", 0));
         destLabel->setText(QString());
         openButton->setText(QApplication::translate("MainWindow", "Open Source Image", 0));
-        sliderValueLabel->setText(QApplication::translate("MainWindow", "Slider Value: ", 0));
-        menuButtons->setTitle(QApplication::translate("MainWindow", "Buttons", 0));
+        menuButtons->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuFilters->setTitle(QApplication::translate("MainWindow", "Filters", 0));
     } // retranslateUi
 
 };

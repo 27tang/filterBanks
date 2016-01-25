@@ -14,11 +14,21 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QPushButton" name="gaussBlurButton">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,0">
+    <item row="0" column="1">
+     <widget class="QLabel" name="sliderValueLabel">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
       <property name="text">
-       <string>Gaussian Blur</string>
+       <string>0</string>
       </property>
      </widget>
     </item>
@@ -32,7 +42,30 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
+    <item row="0" column="3">
+     <widget class="QPushButton" name="commitChangesButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Commit Changes</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QSlider" name="levelSlider">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
      <widget class="QLabel" name="destLabel">
       <property name="autoFillBackground">
        <bool>true</bool>
@@ -49,20 +82,6 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QSlider" name="levelSlider">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="sliderValueLabel">
-      <property name="text">
-       <string>Slider Value: </string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -76,10 +95,21 @@
    </property>
    <widget class="QMenu" name="menuButtons">
     <property name="title">
-     <string>Buttons</string>
+     <string>File</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuFilters">
+    <property name="title">
+     <string>Filters</string>
+    </property>
+    <addaction name="actionGaussian_Blur"/>
+    <addaction name="actionMedian_Filter"/>
+    <addaction name="actionBox_Filter"/>
+    <addaction name="actionBilateral_Filter"/>
+    <addaction name="actionCanny_Edge"/>
+   </widget>
    <addaction name="menuButtons"/>
+   <addaction name="menuFilters"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -90,6 +120,46 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionGaussian_Blur">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Gaussian Blur</string>
+   </property>
+  </action>
+  <action name="actionMedian_Filter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Median Filter</string>
+   </property>
+  </action>
+  <action name="actionBox_Filter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Box Filter</string>
+   </property>
+  </action>
+  <action name="actionBilateral_Filter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bilateral Filter</string>
+   </property>
+  </action>
+  <action name="actionCanny_Edge">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Canny Edge</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
