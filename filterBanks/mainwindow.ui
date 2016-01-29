@@ -13,45 +13,43 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	background-color: grey;
+border-width: 7px;
+    border-color: #1e1e1e;
+
+}
+
+
+QPushButton
+{
+    color: #b1b1b1;
+    background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);
+    border-width: 1px;
+    border-color: #1e1e1e;
+    border-style: solid;
+    border-radius: 6;
+    padding: 3px;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+QLabel {
+background-color: #3d3d29;
+color: #b1b1b1;
+
+
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,0">
-    <item row="0" column="1">
-     <widget class="QLabel" name="sliderValueLabel">
-      <property name="font">
-       <font>
-        <pointsize>14</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,0,0">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="openButton">
       <property name="text">
-       <string>0</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="sourceLabel">
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="commitChangesButton">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>Commit Changes</string>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
+       <string>Open Source Image</string>
       </property>
      </widget>
     </item>
@@ -65,20 +63,60 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="3">
+    <item row="0" column="4">
+     <widget class="QPushButton" name="commitChangesButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Commit Changes</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
      <widget class="QLabel" name="destLabel">
       <property name="autoFillBackground">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="openButton">
+    <item row="2" column="0">
+     <widget class="QLabel" name="sourceLabel">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="text">
-       <string>Open Source Image</string>
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="sliderValueLabel">
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QSlider" name="biSlider">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
@@ -93,12 +131,37 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar
+ {
+	background-color: grey;
+	border-width: 7px;
+    border-color: #1e1e1e;
+color: white;
+
+
+}
+QMenuBar::item{
+	background-color: transparent
+
+}
+
+QMenu {
+	background-color: grey;
+	border-width: 7px;
+    border-color: #1e1e1e;
+
+}</string>
+   </property>
    <widget class="QMenu" name="menuButtons">
     <property name="title">
      <string>File</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuFilters">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>Filters</string>
     </property>
@@ -108,8 +171,22 @@
     <addaction name="actionBilateral_Filter"/>
     <addaction name="actionCanny_Edge"/>
    </widget>
+   <widget class="QMenu" name="menuDenoising">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Additional</string>
+    </property>
+    <addaction name="actionNL_Means"/>
+    <addaction name="actionFilter2D"/>
+    <addaction name="actionErode"/>
+    <addaction name="actionNormalized_Block_Filter"/>
+    <addaction name="actionColor_Transfer"/>
+   </widget>
    <addaction name="menuButtons"/>
    <addaction name="menuFilters"/>
+   <addaction name="menuDenoising"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -158,6 +235,49 @@
    </property>
    <property name="text">
     <string>Canny Edge</string>
+   </property>
+  </action>
+  <action name="actionNL_Means">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>NL-Means</string>
+   </property>
+  </action>
+  <action name="actionFilter2D">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Filter2D</string>
+   </property>
+  </action>
+  <action name="actionErode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Erode</string>
+   </property>
+  </action>
+  <action name="actionNormalized_Block_Filter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Normalized Block Filter</string>
+   </property>
+  </action>
+  <action name="actionColor_Transfer">
+   <property name="text">
+    <string>Color Transfer</string>
    </property>
   </action>
  </widget>

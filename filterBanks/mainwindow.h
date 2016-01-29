@@ -40,9 +40,22 @@ private slots:
 
     void on_actionCanny_Edge_triggered();
 
+    void on_actionNL_Means_triggered();
+
+    void on_biSlider_valueChanged(int value);
+
+    void on_actionFilter2D_triggered();
+
+    void on_actionErode_triggered();
+
+    void on_actionNormalized_Block_Filter_triggered();
+
+    void on_actionColor_Transfer_triggered();
+
 private:
     cv::Mat source;
     cv::Mat dest;
+    QString fileName;
 
     Ui::MainWindow *ui;
     void MainWindow::uncheckAllCheckableFilters();
